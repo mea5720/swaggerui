@@ -17,14 +17,41 @@ tags:
 - name: developers
   description: Operations available to regular developers
 paths:
+  /doc:
+    get:
+      tags:
+      - developers admins
+      summary: returns training info
+      description: get table of contents
+      operationId: toc
+      parameters:
+      - name: section
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InventoryItem'
+                x-content-type: application/json
+        "400":
+          description: bad input parameter
+      x-swagger-router-controller: DevelopersAdmins
   /inventory:
     get:
       tags:
       - developers
       summary: searches inventory
-      description: |
-        By passing in the appropriate options, you can search for
-        available inventory in the system
+      description: By passing in the appropriate options, you can search for available
+        inventory in the system
       operationId: searchInventory
       parameters:
       - name: searchString
